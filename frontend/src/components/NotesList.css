@@ -1,0 +1,27 @@
+.notes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+}
+
+.note-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 200px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.note-card:hover {
+    transform: scale(1.05);
+}
+
+.note-card p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}

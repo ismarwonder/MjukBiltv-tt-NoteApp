@@ -13,6 +13,7 @@ if ($mysqli->connect_error) {
 
 // Läs in operation från kommandoradens parameter
 $operation = $argv[1] ?? null;
+$id = $argv[2] ?? null;
 
 // Hantera olika typer av förfrågningar
 switch ($operation) {
@@ -22,6 +23,13 @@ switch ($operation) {
         break;
     case 'read':
         readNotes($mysqli);
+        break;
+    case 'delete':
+        if ($id !== null) {
+            deleteNote($id, $mysqli);
+        } else {
+            echo json_encode(['error' => 'Missing note ID']);
+        }
         break;
     default:
         echo json_encode(['error' => 'Invalid operation requested']);
@@ -91,10 +99,15 @@ function deleteNote($id, $mysqli) {
 
     $stmt->bind_param('i', $id);
     if ($stmt->execute()) {
-        echo json_encode(['message' => 'Record deleted successfully']);
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['message' => 'Record deleted successfully']);
+        } else {
+            echo json_encode(['error' => 'Note not found']);
+        }
     } else {
         echo json_encode(['error' => $stmt->error]);
     }
     $stmt->close();
 }
+
 ?>

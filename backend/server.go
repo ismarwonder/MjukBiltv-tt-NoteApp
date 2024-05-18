@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"strings"
 )
 
 type Note struct {
@@ -14,6 +15,7 @@ type Note struct {
 
 func main() {
 	http.HandleFunc("/notes", handleNotes)
+    http.HandleFunc("/notes/", handleNotes)
 	log.Println("Server starting on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -98,13 +100,29 @@ func handleUpdateNotes(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleDeleteNotes(w http.ResponseWriter, r *http.Request) {
-	// PSEUDOKOD:
-	// 1. Identifiera noten som ska tas bort
-	// 2. Kolla om noten existerar
-	// 3. Om existerar, ta bort noten
-	// 4. Om inte existerar, returnera HTTP 404
-	// 5. Om borttagandet lyckas, returnera HTTP 204
-	executePHP("delete")
+	id := strings.TrimPrefix(r.URL.Path, "/notes/")
+	if id == "" {
+		http.Error(w, "Missing note ID", http.StatusBadRequest)
+		return
+	}
+
+	output, err := executePHP("delete", id)
+	if err != nil {
+		log.Printf("Failed to execute PHP script: %v", err)
+		http.Error(w, "Failed to delete note", http.StatusInternalServerError)
+		return
+	}
+
+    if strings.Contains(string(output), "Note not found") {
+        http.Error(w, "Note not found", http.StatusNotFound)
+        return
+    }
+
+	if strings.Contains(string(output), "Record deleted successfully") {
+		w.WriteHeader(http.StatusNoContent)
+	} else {
+		http.Error(w, "Note not found", http.StatusNotFound)
+	}
 }
 
 func executePHP(operation string, args ...string) ([]byte, error) {

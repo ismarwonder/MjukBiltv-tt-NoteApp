@@ -1,0 +1,27 @@
+import React from 'react';
+import './NoteActions.css';
+
+const NoteActions = ({ createNote, selectedNote, deleteNote, openNewNote, isSaveDisabled }) => {
+    return (
+        <div className="note-actions">
+            <button className="new-note-button" onClick={openNewNote}>Nytt</button>
+            <button 
+                className="create-button" 
+                onClick={createNote} 
+                disabled={isSaveDisabled}
+            >
+                Spara
+            </button>
+            {selectedNote && (
+                <button 
+                    className="delete-button" 
+                    onClick={() => deleteNote(selectedNote.id)}
+                >
+                    Radera
+                </button>
+            )}
+        </div>
+    );
+};
+
+export default NoteActions;

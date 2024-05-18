@@ -1,0 +1,20 @@
+.note-viewer-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.note-viewer-content {
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    outline: none; 
+    white-space: pre-wrap; 
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}

@@ -1,47 +1,39 @@
-.notes-list {
+.notes-list-container {
+    width: 30%;
+    border-right: 1px solid #ddd;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+}
+
+.notes-list-header {
     padding: 1rem;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.notes-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
 }
 
 .note-card {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    width: 200px;
-    position: relative; 
-    transition: transform 0.2s ease-in-out;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.note-card.selected {
+    background-color: #f0f0f0; /* Grå bakgrund för vald not */
 }
 
 .note-card p {
     margin: 0;
     font-size: 1rem;
     color: #333;
-}
-
-.delete-button {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: #ff4d4d;
-    border: none;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none; 
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    line-height: 1; 
-}
-
-.note-card:hover .delete-button {
-    display: flex;
 }

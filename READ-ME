@@ -1,0 +1,18 @@
+Så kul att du har klickat hit!
+
+Detta är en enkel antecnknings app som jag skapade just för att testa och lära mig Go och php!
+Aldrig stött på dessa men det hindrar mig aldrig från att testa :)
+
+Ifall jag kommer vidare i er rekrytering kanske jag har hunnit lägga till fler funktioner än bara enkel CRUD.
+
+Jag använde mig av Mysql databas.
+Skapa tabellen enligt nedan för att kunna använda appen :)
+
+
+CREATE DATABASE notes;
+USE notes;
+CREATE TABLE notes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

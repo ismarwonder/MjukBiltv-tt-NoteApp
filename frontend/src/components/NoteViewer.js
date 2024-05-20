@@ -4,24 +4,21 @@ import NoteActions from './NoteActions';
 
 const NoteViewer = ({ selectedNote, deleteNote, createNote, updateNote, openNewNote }) => {
     const [content, setContent] = useState('');
-    const [originalContent, setOriginalContent] = useState('');
     const contentRef = useRef(null);
 
     useEffect(() => {
         if (selectedNote) {
             setContent(selectedNote.content);
-            setOriginalContent(selectedNote.content);
+            if (contentRef.current) {
+                contentRef.current.textContent = selectedNote.content;
+            }
         } else {
             setContent('');
-            setOriginalContent('');
+            if (contentRef.current) {
+                contentRef.current.textContent = '';
+            }
         }
     }, [selectedNote]);
-
-    useEffect(() => {
-        if (contentRef.current) {
-            contentRef.current.textContent = content;
-        }
-    }, [content]);
 
     const handleSaveNote = () => {
         if (selectedNote) {
@@ -35,7 +32,7 @@ const NoteViewer = ({ selectedNote, deleteNote, createNote, updateNote, openNewN
         setContent(e.currentTarget.textContent);
     };
 
-    const isSaveDisabled = selectedNote ? content === originalContent : content.trim() === '';
+    const isSaveDisabled = selectedNote ? content.trim() === '' || content === selectedNote.content : content.trim() === '';
 
     return (
         <div className="note-viewer">

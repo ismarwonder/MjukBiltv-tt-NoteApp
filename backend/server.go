@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -90,13 +91,42 @@ func handlePostNotes(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleUpdateNotes(w http.ResponseWriter, r *http.Request) {
-	// PSEUDOKOD:
-	// 1. Hämta och validera den uppdaterade notdata
-	// 2. Kolla om noten existerar
-	// 3. Om existerar, uppdatera noten med den nya datan
-	// 4. Om inte existerar, returnera HTTP 404
-	// 5. Om uppdateringen lyckas, returnera HTTP 200 och den uppdaterade noten
-	executePHP("put")
+    id := strings.TrimPrefix(r.URL.Path, "/notes/")
+    if id == "" {
+        http.Error(w, "Missing note ID", http.StatusBadRequest)
+        return
+    }
+
+    var note Note
+    defer r.Body.Close()
+	err := json.NewDecoder(r.Body).Decode(&note)
+	if err != nil {
+		http.Error(w, "Error parsing JSON request body", http.StatusBadRequest)
+		return
+	}
+
+    note.ID, err = strconv.Atoi(id);
+    if err != nil {
+        http.Error(w, "Invalid ID", http.StatusBadRequest)
+        return
+    }
+
+    noteJSON, err := json.Marshal(note)
+	if err != nil {
+		http.Error(w, "Error marshalling note to JSON", http.StatusInternalServerError)
+		return
+	}
+
+    output, err := executePHP("update", id, string(noteJSON))
+	if err != nil {
+		log.Printf("Failed to execute PHP script: %v", err)
+		http.Error(w, "Failed to save note", http.StatusInternalServerError)
+		return
+	}
+
+    w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(output)
 }
 
 func handleDeleteNotes(w http.ResponseWriter, r *http.Request) {

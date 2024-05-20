@@ -13,7 +13,6 @@ if ($mysqli->connect_error) {
 
 // Läs in operation från kommandoradens parameter
 $operation = $argv[1] ?? null;
-$id = $argv[2] ?? null;
 
 // Hantera olika typer av förfrågningar
 switch ($operation) {
@@ -24,7 +23,13 @@ switch ($operation) {
     case 'read':
         readNotes($mysqli);
         break;
+    case 'update':
+        $id = $argv[2] ?? null;
+        $content = json_decode($argv[3], true)['content'] ?? '';
+        updateNote($id, $content, $mysqli);
+        break;
     case 'delete':
+        $id = $argv[2] ?? null;
         if ($id !== null) {
             deleteNote($id, $mysqli);
         } else {

@@ -1,16 +1,16 @@
 import React from 'react';
 import './NoteActions.css';
 
-const NoteActions = ({ createNote, selectedNote, deleteNote, openNewNote, isSaveDisabled }) => {
+const NoteActions = ({ handleSaveNote, selectedNote, deleteNote, openNewNote, isSaveDisabled }) => {
     return (
         <div className="note-actions">
             <button className="new-note-button" onClick={openNewNote}>Nytt</button>
             <button 
-                className="create-button" 
-                onClick={createNote} 
+                className="save-button" 
+                onClick={handleSaveNote} 
                 disabled={isSaveDisabled}
             >
-                Spara
+                {selectedNote ? 'Uppdatera' : 'Spara'}
             </button>
             {selectedNote && (
                 <button 

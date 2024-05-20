@@ -19,7 +19,7 @@ const App = () => {
                 console.log('Fetched notes:', data);
                 setNotes(data);
                 if (data.length > 0) {
-                    setSelectedNote(data[0]); // Ställ in den första noten som förvald
+                    setSelectedNote(data[0]); 
                 }
             })
             .catch(error => console.error('Error fetching notes:', error));
@@ -36,9 +36,9 @@ const App = () => {
             const updatedNotes = notes.filter(note => note.id !== id);
             setNotes(updatedNotes);
             if (updatedNotes.length > 0) {
-                setSelectedNote(updatedNotes[0]); // Ställ in den nya översta noten som förvald
+                setSelectedNote(updatedNotes[0]); 
             } else {
-                setSelectedNote(null); // Om inga noter kvar, ställ in selectedNote till null
+                setSelectedNote(null); 
             }
         })
         .catch(error => console.error('Error deleting note:', error));
@@ -63,7 +63,7 @@ const App = () => {
         .then(data => {
             const updatedNotes = [...notes, data];
             setNotes(updatedNotes);
-            setSelectedNote(data); // Ställ in den nya noten som förvald
+            setSelectedNote(data); 
         })
         .catch(error => console.error('Error creating note:', error));
     };
@@ -87,7 +87,7 @@ const App = () => {
                 note.id === id ? { ...note, content: data.content } : note
             );
             setNotes(updatedNotes);
-            setSelectedNote(data); // Uppdatera den valda noten med nytt innehåll
+            setSelectedNote(data); 
         })
         .catch(error => console.error('Error updating note:', error));
     };

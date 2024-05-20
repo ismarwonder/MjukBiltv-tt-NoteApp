@@ -40,7 +40,7 @@ const NoteViewer = ({ selectedNote, deleteNote, createNote, updateNote, openNewN
     return (
         <div className="note-viewer">
             <NoteActions 
-                createNote={handleSaveNote} 
+                handleSaveNote={handleSaveNote} 
                 selectedNote={selectedNote} 
                 deleteNote={deleteNote}
                 openNewNote={openNewNote}

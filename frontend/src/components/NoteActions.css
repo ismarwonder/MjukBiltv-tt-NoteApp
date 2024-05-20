@@ -5,7 +5,7 @@
     padding: 1rem;
 }
 
-button.create-button, button.new-note-button {
+button.save-button, button.new-note-button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -16,12 +16,12 @@ button.create-button, button.new-note-button {
     margin-right: 1rem;
 }
 
-button.create-button:disabled, button.new-note-button:disabled {
+button.save-button:disabled, button.new-note-button:disabled {
     background-color: #9E9E9E; 
     cursor: not-allowed;
 }
 
-button.create-button:hover:enabled, button.new-note-button:hover:enabled {
+button.save-button:hover:enabled, button.new-note-button:hover:enabled {
     background-color: #45a049;
 }
 
